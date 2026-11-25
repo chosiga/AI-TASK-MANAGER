@@ -80,4 +80,64 @@ python assistant.py --cli
 ```sh
 python -m unittest discover -s tests -v
 ```
+
+## Requirements
+
+- macOS or another system with Python 3
+- Ollama
+- The `llama3.2:3b` model
+- Python packages listed in `requirements.txt`
+
+## Troubleshooting
+
+### Ollama is unavailable
+
+Confirm that Ollama is running and that the required model is installed:
+
+```sh
+ollama serve
+ollama list
+ollama pull llama3.2:3b
+```
+
+Use `GET /api/health` to check whether the application can reach Ollama.
+
+### Port 5000 is already in use
+
+Stop the process using port 5000 or start Flask on another port. Do not expose
+the server to the network unless additional authentication and security
+controls are intentionally implemented.
+
+### Tasks are missing or contain unexpected priority values
+
+The application stores tasks in `tasks.json`. Older tasks without a priority
+are treated as medium priority for display and are not required to be migrated
+before use.
+
+## Data and privacy
+
+- Task data is stored locally in `tasks.json`.
+- Ollama requests use the local Ollama service.
+- The Flask server is intended to listen only on `127.0.0.1`.
+- Do not commit personal task data, credentials, API keys, or generated database
+  files.
+- The assistant cannot execute arbitrary generated Python or shell commands.
+
+## Contributing
+
+1. Create a focused branch for the change.
+2. Keep task validation and storage behavior consistent across the web,
+   desktop, and CLI interfaces.
+3. Add or update focused tests for changed behavior.
+4. Run the full test command before opening a pull request.
+5. Review changes for accidental credentials or personal task data.
+
+Example branch workflow:
+
+```sh
+git switch -c feature/short-description
+git add .
+git commit -m "Add a concise description"
+git push -u origin feature/short-description
+```
 //thank you 
