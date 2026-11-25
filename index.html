@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Overview - Taskflow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">✳</span><span>taskflow</span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="navigation">
+        <a class="nav-link active" href="index.html"><span>▦</span>Overview</a>
+        <a class="nav-link" href="tasks.html"><span>☷</span>My tasks</a>
+        <a class="nav-link" href="assistant.html"><span>✧</span>AI assistant</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-card"><span class="status-dot"></span><div><strong>Private by design</strong><small>AI runs locally</small></div></div>
+        <div class="profile"><div class="profile-avatar">A</div><div><strong>Alex Morgan</strong><small>Personal workspace</small></div></div>
+      </div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div><div class="today-chip"><span class="status-dot"></span><span id="today-label"></span></div></header>
+      <div class="content">
+        <section class="page-heading"><div><p class="eyebrow">YOUR PERSONAL WORKSPACE</p><h1>Good day, Alex <span>✦</span></h1><p>A little progress each day adds up to big results.</p></div><a class="button primary" href="tasks.html">＋ New task</a></section>
+        <section class="stats-grid">
+          <article class="stat-card"><span>Total tasks</span><strong id="total-count">0</strong><small>Across your workspace</small></article>
+          <article class="stat-card"><span>In progress</span><strong id="pending-count">0</strong><small>Ready when you are</small></article>
+          <article class="stat-card"><span>Completed</span><strong id="completed-count">0</strong><small>Nice work so far</small></article>
+          <article class="stat-card"><span>Completion rate</span><strong><span id="completion-rate">0</span>%</strong><div class="progress"><i id="progress-fill"></i></div></article>
+        </section>
+        <section class="dashboard-grid">
+          <article class="panel dashboard-tasks">
+            <div class="panel-heading"><div><p class="eyebrow">STAY ON TOP OF IT</p><h2>Recent tasks</h2></div><a class="text-link" href="tasks.html">View all →</a></div>
+            <div id="recent-task-list" class="recent-task-list"></div>
+          </article>
+          <article class="panel dashboard-assistant">
+            <div class="panel-heading"><div><p class="eyebrow">LOCAL AI</p><h2>Taskflow AI</h2></div><span class="model-chip">llama3.2:3b</span></div>
+            <p>Manage tasks using natural language.</p>
+            <div class="assistant-shortcuts"><a href="assistant.html" data-prompt="Show all pending tasks">Show pending</a><a href="assistant.html" data-prompt="What tasks should I complete today?">Plan my day</a></div>
+            <a class="button primary wide" href="assistant.html ">Open AI assistant</a>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="/dashboard.js" defer></script>
+</body>
+</html>
