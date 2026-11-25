@@ -1,126 +1,113 @@
 # Taskflow
 
 Taskflow is a local-first task manager that combines a responsive web interface,
-an Ollama-powered AI assistant, and a Tkinter desktop application. Tasks are
-stored in `tasks.json`, so the web, desktop, and CLI interfaces share the same
-task data.
+an Ollama-powered AI assistant, and a Tkinter desktop application. The goal is
+to give users one shared task data store across all supported interfaces.
 
-## Features
+## Project status
 
-- View task totals, pending work, completed work, and completion rate
-- Search tasks and filter by status or priority
-- Add, edit, complete, reopen, and delete tasks
-- Schedule tasks with due dates and optional start/end times
-- Manage tasks through natural-language chat
-- Run AI locally through Ollama
-- Require explicit confirmation before deleting tasks
+This repository is organized around feature branches for a student team
+project. Each branch contains the work assigned to one role, and the final
+application is assembled by merging those contributions.
 
-## Requirements
+The branch currently checked out here is `ATM-6-Database-Engineer`. At present,
+this branch contains documentation only; application source code is maintained
+on the role-specific branches and is not runnable directly from this checkout.
 
-- macOS
-- Python 3
-- [Ollama](https://ollama.com/download)
-- The `llama3.2:3b` model
+## Planned features
 
-## Installation
+- A dashboard with task totals, completion progress, and status summaries
+- Task search and filtering by status and priority
+- Task creation, editing, completion, reopening, and deletion
+- Due dates and optional start and end times
+- Natural-language task management through a local AI assistant
+- Confirmation before destructive actions
+- Shared task data between web, desktop, and command-line interfaces
 
-Clone the repository and open the project directory:
+## Interfaces
+
+### Web application
+
+The assembled web application will provide an overview dashboard, a task
+workspace, and an AI assistant chat.
+
+### Desktop application
+
+The Tkinter desktop interface provides access to the same task data outside the
+browser.
+
+### Command-line assistant
+
+The CLI assistant provides an interactive terminal interface for managing tasks
+through natural language.
+
+## Development
+
+Use the branch that matches the work you are responsible for:
 
 ```sh
-cd AI-TASK-MANAGER
+git switch ATM-6-Database-Engineer
+```
+
+For a complete application assembled from the role branches, use the relevant
+integration branch and keep shared data formats compatible with the rest of the
+team.
+
+## Expected setup
+
+Once the application source is merged into the active branch, setup is intended
+to use Python virtual environments and a local Ollama installation:
+
+```sh
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Install the local Ollama model:
+Taskflow's AI assistant uses the `llama3.2:3b` Ollama model:
 
 ```sh
 ollama pull llama3.2:3b
+ollama serve
 ```
 
-Make sure Ollama is running, then start the web application:
-
-```sh
-python -m backend.app
-```
-
-Open <http://127.0.0.1:5000>.
-
-## Interfaces
-
-### Web application
-
-The web interface includes an overview dashboard, task management workspace,
-and AI assistant chat.
-
-```text
-index.html       Overview dashboard
-tasks.html       Task list and task editor
-assistant.html   AI assistant chat
-style.css        Shared responsive styles
-```
-
-### Desktop application
-
-Launch the original Tkinter desktop interface:
-
-```sh
-python assistant.py
-```
-
-### Command-line assistant
-
-Launch the interactive assistant in the terminal:
-
-```sh
-python assistant.py --cli
-```
+The web application is expected to be available locally at
+<http://127.0.0.1:5000>.
 
 ## AI behavior
 
-Taskflow uses Ollama only for natural-language understanding and tool selection.
-The application exposes a fixed set of task functions, so generated requests
-cannot execute arbitrary Python or shell commands.
+The Ollama model is used for natural-language understanding and tool selection.
+Task operations should be exposed through a fixed, validated set of functions;
+the model must not receive unrestricted shell or Python execution capabilities.
 
-The web API exposes:
-
-- `GET /api/tasks` - list tasks
-- `POST /api/tasks` - create a task
-- `PUT /api/tasks/<id>` - update a task
-- `PATCH /api/tasks/<id>/complete` - complete a task
-- `PATCH /api/tasks/<id>/reopen` - reopen a task
-- `DELETE /api/tasks/<id>` - delete a confirmed task
-- `POST /api/chat` - send messages to the local assistant
-- `GET /api/health` - check Ollama and model availability
+Destructive operations, especially task deletion, should require explicit
+confirmation.
 
 ## Data
 
-Tasks are persisted in `tasks.json`. Existing tasks without a priority are
-treated as medium priority for display and remain backward-compatible.
+The project is planned to persist tasks in a shared local data store so web,
+desktop, and CLI users observe the same tasks.
 
-The Flask server binds only to `127.0.0.1`. Keep Ollama and the application
-local unless you intentionally apply and review additional network security.
+The exact database implementation and schema should be documented on the branch
+that introduces that integration. Until source code is available, the format of
+the shared task records is intentionally not specified in this README.
 
-## Project structure
+## Security and privacy
 
-```text
-backend/
-  app.py              Flask application and API routes
-  assistant.py        Web-facing assistant adapter
-  task_manager.py     Web-facing task operations
+Keep Ollama and local application services bound to loopback addresses unless
+remote access is deliberately required and protected.
 
-assistant.py          Ollama tool-routing agent
-task_manager.py       Shared task validation and storage
-gui.py                Tkinter desktop interface
-tests/                Task, assistant, and web API tests
-```
+Do not commit API keys, credentials, personal task data, or generated database
+files. The AI assistant should be able to manage tasks only through approved
+application operations.
 
-## Run tests
+## Contributing
 
-Activate the virtual environment and run:
+1. Switch to the appropriate role branch.
+2. Make focused changes for that role.
+3. Test the relevant application behavior.
+4. Open a pull request for review and integration.
 
-```sh
-python -m unittest discover -s tests -v
-```
+Keep changes limited to the assigned role to avoid conflicting edits in shared
+files.
