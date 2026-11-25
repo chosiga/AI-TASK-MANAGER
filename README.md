@@ -40,6 +40,11 @@ first and run the same install/start commands.
 - `POST /api/chat` accepts conversation messages and returns the local model
   reply as JSON. `GET /api/health` checks Ollama availability and the configured
   model installation.
+- Translation API: not implemented yet. The intended local endpoint is
+  `POST /api/translate` with a JSON body containing `text`,
+  `target_language`, and optional `source_language` (`"auto"` by default).
+  It should return `{"translation":"..."}` using the locally running Ollama
+  model; no external translation provider is configured.
 - Task data persists in `tasks.json`. Existing tasks without a priority are
   displayed as medium priority and remain compatible.
 

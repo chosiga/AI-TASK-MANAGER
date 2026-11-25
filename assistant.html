@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Assistant - Taskflow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">✳</span><span>taskflow</span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="navigation">
+        <a class="nav-link" href="index.html"><span>▦</span>Overview</a>
+        <a class="nav-link" href="tasks.html"><span>☷</span>My tasks</a>
+        <a class="nav-link active" href="assistant.html"><span>✧</span>AI assistant</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="local-card"><span class="status-dot"></span><div><strong>Private by design</strong><small>AI runs locally</small></div></div><div class="profile"><div class="profile-avatar">A</div><div><strong>Alex Morgan</strong><small>Personal workspace</small></div></div></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong>AI assistant</strong></div><div class="today-chip"><span class="status-dot"></span><span id="today-label"></span></div></header>
+      <div class="content assistant-content">
+        <section class="page-heading"><div><p class="eyebrow">LOCAL AI AGENT</p><h1>Taskflow AI</h1><p>Ask in natural language. The agent can add, list, update, complete, and delete tasks.</p></div><button class="button quiet" id="new-chat-button">↻ New conversation</button></section>
+        <section class="assistant-panel panel">
+          <div class="assistant-heading"><div class="assistant-avatar">✳</div><div><h2>Taskflow AI</h2><small id="model-status" role="status"><i></i> Checking local Ollama…</small></div><a class="icon-button" href="tasks.html" title="Open tasks">☷</a></div>
+          <div class="chat-messages" id="chat-messages" aria-live="polite"><div class="message assistant"><span>✳</span><div><small>Taskflow AI</small><p>Hey Alex! What can I help you get done today?</p></div></div></div>
+          <div class="suggestion-row" id="suggestions"><button data-prompt="Show all pending tasks">Show pending</button><button data-prompt="What tasks should I complete today?">Plan my day</button><button data-prompt="Add study Python tomorrow">Add a task</button></div>
+          <form class="chat-composer" id="chat-form"><input id="chat-input" placeholder="Ask me to manage your tasks..." autocomplete="off"><button id="send-button" type="submit">↑</button></form>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="toast-region" id="toast-region"></div>
+  <script src="/assistant.js" defer></script>
+</body>
+</html>
