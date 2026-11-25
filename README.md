@@ -1,81 +1,125 @@
-# Taskflow — AI Task Management Agent
+# Taskflow
 
-Taskflow is a local-first task manager with a responsive Flask web dashboard,
-an Ollama-powered natural-language agent, and the original Tkinter desktop app.
-Both interfaces share `task_manager.py` and the existing `tasks.json` data.
+Taskflow is a local-first task manager that combines a responsive web interface,
+an Ollama-powered AI assistant, and a Tkinter desktop application. Tasks are
+stored in `tasks.json`, so the web, desktop, and CLI interfaces share the same
+task data.
 
-## Run the web application on macOS
+## Features
 
-1. Install [Ollama](https://ollama.com/download), open it, then fetch the model:
+- View task totals, pending work, completed work, and completion rate
+- Search tasks and filter by status or priority
+- Add, edit, complete, reopen, and delete tasks
+- Schedule tasks with due dates and optional start/end times
+- Manage tasks through natural-language chat
+- Run AI locally through Ollama
+- Require explicit confirmation before deleting tasks
 
-   ```sh
-   ollama pull llama3.2:3b
-   ```
+## Requirements
 
-2. From the project folder, install dependencies and start Flask:
+- macOS
+- Python 3
+- [Ollama](https://ollama.com/download)
+- The `llama3.2:3b` model
 
-   ```sh
-   cd /Users/chosiga/Desktop/AI-Task-Agent
-   source .venv/bin/activate
-   python -m pip install -r requirements.txt
-   python -m backend.app
-   ```
+## Installation
 
-3. Open <http://127.0.0.1:5000>.
+Clone the repository and open the project directory:
 
-Flask binds only to `127.0.0.1`; do not change it to a public interface. Ollama
-is used through its local service and is not exposed by this application. To
-use a different Python installation, create/activate a virtual environment
-first and run the same install/start commands.
+```sh
+cd AI-TASK-MANAGER
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
-## Web app features
+Install the local Ollama model:
 
-- Overview with total, pending, completed and completion-rate summaries.
-- Search and status/priority filters, with task priorities and due dates.
-- Add, edit, complete/reopen and delete tasks. Deletion requires explicit
-  confirmation in the interface.
-- Natural-language chat backed by Ollama tool calls. The model can only select
-  the predefined task functions; the backend executes them and never runs
-  arbitrary generated Python or shell commands.
-- `POST /api/chat` accepts conversation messages and returns the local model
-  reply as JSON. `GET /api/health` checks Ollama availability and the configured
-  model installation.
-- Task data persists in `tasks.json`. Existing tasks without a priority are
-  displayed as medium priority and remain compatible.
+```sh
+ollama pull llama3.2:3b
+```
 
-## Existing desktop and CLI interfaces
+Make sure Ollama is running, then start the web application:
 
-The original desktop app is still available:
+```sh
+python -m backend.app
+```
+
+Open <http://127.0.0.1:5000>.
+
+## Interfaces
+
+### Web application
+
+The web interface includes an overview dashboard, task management workspace,
+and AI assistant chat.
+
+```text
+index.html       Overview dashboard
+tasks.html       Task list and task editor
+assistant.html   AI assistant chat
+style.css        Shared responsive styles
+```
+
+### Desktop application
+
+Launch the original Tkinter desktop interface:
 
 ```sh
 python assistant.py
 ```
 
-For the terminal interface:
+### Command-line assistant
+
+Launch the interactive assistant in the terminal:
 
 ```sh
 python assistant.py --cli
 ```
 
-## Project files
+## AI behavior
 
-- `index.html`, `tasks.html`, and `assistant.html` provide the dashboard, task
-  form, and assistant chat.
-- `style.css` contains the responsive SaaS-style visual design.
-- `dashboard.js`, `tasks.js`, and `assistant.js` render task data, call the
-  Flask API, and handle explicit deletion confirmation.
-- `backend/app.py` serves the frontend and validates JSON API requests.
-- `backend/assistant.py` and `backend/task_manager.py` are web-facing adapters
-  to the existing agent and shared task logic.
-- `assistant.py` connects Llama 3.2 tool calls to a strict allowlist of task
-  functions; the same agent is used by web, desktop and CLI.
-- `task_manager.py` validates and performs task operations against the JSON
-  file, including update and priority operations.
-- `gui.py` remains the original Tkinter desktop interface.
-- `tests/` contains offline tests for task storage, tool routing, API behavior
-  and deletion confirmation.
+Taskflow uses Ollama only for natural-language understanding and tool selection.
+The application exposes a fixed set of task functions, so generated requests
+cannot execute arbitrary Python or shell commands.
+
+The web API exposes:
+
+- `GET /api/tasks` - list tasks
+- `POST /api/tasks` - create a task
+- `PUT /api/tasks/<id>` - update a task
+- `PATCH /api/tasks/<id>/complete` - complete a task
+- `PATCH /api/tasks/<id>/reopen` - reopen a task
+- `DELETE /api/tasks/<id>` - delete a confirmed task
+- `POST /api/chat` - send messages to the local assistant
+- `GET /api/health` - check Ollama and model availability
+
+## Data
+
+Tasks are persisted in `tasks.json`. Existing tasks without a priority are
+treated as medium priority for display and remain backward-compatible.
+
+The Flask server binds only to `127.0.0.1`. Keep Ollama and the application
+local unless you intentionally apply and review additional network security.
+
+## Project structure
+
+```text
+backend/
+  app.py              Flask application and API routes
+  assistant.py        Web-facing assistant adapter
+  task_manager.py     Web-facing task operations
+
+assistant.py          Ollama tool-routing agent
+task_manager.py       Shared task validation and storage
+gui.py                Tkinter desktop interface
+tests/                Task, assistant, and web API tests
+```
 
 ## Run tests
+
+Activate the virtual environment and run:
 
 ```sh
 python -m unittest discover -s tests -v
