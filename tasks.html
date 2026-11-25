@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Tasks - Taskflow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">✳</span><span>taskflow</span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="navigation">
+        <a class="nav-link" href="index.html"><span>▦</span>Overview</a>
+        <a class="nav-link active" href="tasks.html"><span>☷</span>My tasks</a>
+        <a class="nav-link" href="assistant.html"><span>✧</span>AI assistant</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="local-card"><span class="status-dot"></span><div><strong>Private by design</strong><small>AI runs locally</small></div></div><div class="profile"><div class="profile-avatar">A</div><div><strong>Alex Morgan</strong><small>Personal workspace</small></div></div></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong>My tasks</strong></div><div class="today-chip"><span class="status-dot"></span><span id="today-label"></span></div></header>
+      <div class="content">
+        <section class="page-heading"><div><p class="eyebrow">TASK WORKSPACE</p><h1>My tasks</h1><p>Organize, prioritize, and complete your work.</p></div><button class="button primary" id="add-task-button">＋ New task</button></section>
+        <section class="panel standalone-panel">
+          <div class="task-toolbar">
+            <label class="task-search"><span>⌕</span><input id="task-search" type="search" placeholder="Search tasks..."></label>
+            <select id="status-filter"><option value="all">All status</option><option value="pending">In progress</option><option value="completed">Completed</option></select>
+            <select id="priority-filter"><option value="all">All priorities</option><option value="high">High priority</option><option value="medium">Medium priority</option><option value="low">Low priority</option></select>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>TASK</th><th>PRIORITY</th><th>DUE DATE</th><th>STATUS</th><th></th></tr></thead><tbody id="task-rows"></tbody></table><div class="empty-state hidden" id="empty-state">No tasks found.</div></div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <dialog id="task-dialog" class="task-dialog">
+    <form id="task-form">
+      <div class="dialog-heading"><div><p class="eyebrow">TASK DETAILS</p><h2 id="dialog-title">Create task</h2></div><button type="button" class="icon-button" id="close-dialog">×</button></div>
+      <label>Task name<input id="task-name" name="task_name" required maxlength="240"></label>
+      <div class="form-row"><label>Priority<select id="task-priority" name="priority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label><label>Due date<input id="task-due-date" name="due_date" type="date"></label></div>
+      <div class="form-row"><label>Work date<input id="task-schedule-date" name="schedule_date" type="date"></label><div class="form-group"><span>Time window</span><div class="time-fields"><input id="task-start-time" name="start_time" type="time"><span>to</span><input id="task-end-time" name="end_time" type="time"></div></div></div>
+      <p class="form-error hidden" id="form-error"></p>
+      <div class="dialog-actions"><button type="button" class="button quiet" id="cancel-dialog">Cancel</button><button type="submit" class="button primary" id="save-task-button">Save task</button></div>
+    </form>
+  </dialog>
+  <div class="toast-region" id="toast-region"></div>
+  <script src="/tasks.js" defer></script>
+</body>
+</html>
