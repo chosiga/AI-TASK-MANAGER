@@ -31,7 +31,23 @@ on the role-specific branches and is not runnable directly from this checkout.
 The assembled web application will provide an overview dashboard, a task
 workspace, and an AI assistant chat.
 
-### Desktop application
+- Overview with total, pending, completed and completion-rate summaries.
+- Search and status/priority filters, with task priorities and due dates.
+- Add, edit, complete/reopen and delete tasks. Deletion requires explicit
+  confirmation in the interface.
+- Natural-language chat backed by Ollama tool calls. The model can only select
+  the predefined task functions; the backend executes them and never runs
+  arbitrary generated Python or shell commands.
+- `POST /api/chat` accepts conversation messages and returns the local model
+  reply as JSON. `GET /api/health` checks Ollama availability and the configured
+  model installation.
+- Translation API: not implemented yet. The intended local endpoint is
+  `POST /api/translate` with a JSON body containing `text`,
+  `target_language`, and optional `source_language` (`"auto"` by default).
+  It should return `{"translation":"..."}` using the locally running Ollama
+  model; no external translation provider is configured.
+- Task data persists in `tasks.json`. Existing tasks without a priority are
+  displayed as medium priority and remain compatible.
 
 The Tkinter desktop interface provides access to the same task data outside the
 browser.
